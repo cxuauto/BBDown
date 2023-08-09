@@ -64,7 +64,7 @@ jobs:
   build-linux-musl-x64:
 
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/dotnet/sdk:6.0-alpine
+    container: mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
     steps:
       - uses: actions/checkout@v2
