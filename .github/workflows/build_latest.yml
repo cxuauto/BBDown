@@ -74,9 +74,11 @@ jobs:
           wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r1/glibc-2.35-r1.apk
           apk add glibc-2.35-r1.apk
       - run: apk --no-cache add clang clang-dev musl-dev git gcc krb5-dev zlib-dev elfutils-dev lldb binutils build-base zlib-static protobuf-dev grpc-plugins grpc-dev
+      - run: |
+          curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v24.0/protoc-24.0-linux-x86_64.zip && unzip protoc-24.0-linux-x86_64.zip -d proto_tmp && cp proto_tmp/bin/protoc /usr/bin/ && chmod +x /usr/bin/protoc && rm -rf protoc-24.0-linux-x86_64.zip proto_tmp
       - run: dotnet publish BBDown -r linux-musl-x64 -c Release -o artifact
-        # env:
-          # PROTOBUF_PROTOC: /usr/bin/protoc
+        env:
+          PROTOBUF_PROTOC: /usr/bin/protoc
           # GRPC_PROTOC_PLUGIN: /usr/bin/grpc_csharp_plugin
       - run: strip artifact/BBDown
       - name: Upload Artifact[linux-musl-x64]
