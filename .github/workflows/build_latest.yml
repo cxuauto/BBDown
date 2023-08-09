@@ -69,7 +69,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: apk update
-      - run: apk --no-cache add clang clang-dev musl-dev git gcc krb5-dev zlib-dev elfutils-dev lldb binutils build-base zlib-static protobuf-dev grpc-plugins
+      - run: apk --no-cache add clang clang-dev musl-dev git gcc krb5-dev zlib-dev elfutils-dev lldb binutils build-base zlib-static protobuf-dev grpc-plugins grpc-dev
       - run: dotnet publish BBDown -r linux-musl-x64 -c Release -o artifact
         env:
           PROTOBUF_PROTOC: /usr/bin/protoc
