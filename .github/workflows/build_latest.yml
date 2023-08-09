@@ -69,11 +69,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: apk update
+      - run: | 
+          wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+          wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r1/glibc-2.35-r1.apk
+          apk add glibc-2.35-r1.apk
       - run: apk --no-cache add clang clang-dev musl-dev git gcc krb5-dev zlib-dev elfutils-dev lldb binutils build-base zlib-static protobuf-dev grpc-plugins grpc-dev
       - run: dotnet publish BBDown -r linux-musl-x64 -c Release -o artifact
-        env:
-          PROTOBUF_PROTOC: /usr/bin/protoc
-          GRPC_PROTOC_PLUGIN: /usr/bin/grpc_csharp_plugin
+        # env:
+          # PROTOBUF_PROTOC: /usr/bin/protoc
+          # GRPC_PROTOC_PLUGIN: /usr/bin/grpc_csharp_plugin
       - run: strip artifact/BBDown
       - name: Upload Artifact[linux-musl-x64]
         uses: actions/upload-artifact@v1.0.0
